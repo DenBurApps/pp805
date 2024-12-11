@@ -21,6 +21,7 @@ public static class HistoryDataHolder
     {
         var newData = new HistoryData(type, DateTime.Now, crystals);
         Datas.Add(newData);
+        Save();
     }
 
     private static void Save()

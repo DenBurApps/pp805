@@ -139,7 +139,7 @@ namespace SpaceMission
         {
             _crystalsCatched++;
             _score++;
-            _timer += 1;
+            _timer += 3;
             _objectSpawner.ReturnToPool(@object);
             _scoreText.text = _score.ToString();
             StartCoroutine(ShowPlusOneEffect());
@@ -183,7 +183,7 @@ namespace SpaceMission
         private IEnumerator ShowPlusOneEffect()
         {
             _plusOneSprite.SetActive(true);
-            _plusOneSprite.transform.position = _player.transform.position;
+            _plusOneSprite.transform.position = new Vector2(_player.transform.position.x, _player.transform.position.y + 0.6f);
 
             yield return new WaitForSeconds(EffectDuration);
 

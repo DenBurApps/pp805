@@ -11,7 +11,7 @@ namespace SpaceMission
         [SerializeField] private SpawnArea _spawnArea;
         [SerializeField] private int _poolCapacity;
         [SerializeField] private float _objMovingSpeed;
-    
+
         private List<MovingObject> _spawnedObjects = new List<MovingObject>();
 
         private void Awake()
@@ -32,7 +32,7 @@ namespace SpaceMission
         {
             if (ActiveObjects.Count >= _poolCapacity)
                 return;
-        
+
             int randomIndex = Random.Range(0, _prefabs.Length);
             MovingObject prefabToSpawn = _prefabs[randomIndex];
 
@@ -49,7 +49,7 @@ namespace SpaceMission
         {
             if (@object == null)
                 return;
-        
+
             @object.DisableMovement();
             PutObject(@object);
 

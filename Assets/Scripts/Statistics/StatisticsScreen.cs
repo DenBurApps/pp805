@@ -11,11 +11,11 @@ public class StatisticsScreen : MonoBehaviour
    [SerializeField] private Menu _menu;
    [SerializeField] private MainScreen _mainScreen;
    [SerializeField] private SimpleScrollSnap _simpleScrollSnap;
+   [SerializeField] private Settings _settings;
    
    private ScreenVisabilityHandler _screenVisabilityHandler;
 
    public event Action HomeClicked;
-   public event Action SettingsClicked;
    
    private void Awake()
    {
@@ -31,6 +31,7 @@ public class StatisticsScreen : MonoBehaviour
    {
       _menu.HomeClicked += OnHomeClicked;
       _menu.SettingsClicked += OnSettingsClicked;
+      _settings.StatisticsClicked += EnableScreen;
       _mainScreen.StatisticsClicked += EnableScreen;
    }
 
@@ -39,6 +40,7 @@ public class StatisticsScreen : MonoBehaviour
       StopScrolling();
       _menu.HomeClicked -= OnHomeClicked;
       _menu.SettingsClicked -= OnSettingsClicked;
+      _settings.StatisticsClicked -= EnableScreen;
       _mainScreen.StatisticsClicked -= EnableScreen;
    }
    
@@ -81,7 +83,7 @@ public class StatisticsScreen : MonoBehaviour
 
    private void OnSettingsClicked()
    {
-      SettingsClicked?.Invoke();
+      _settings.ShowSettings();
       DisableScreen();
    }
 }

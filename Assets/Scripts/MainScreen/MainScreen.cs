@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using DanielLochner.Assets.SimpleScrollSnap;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(ScreenVisabilityHandler))]
 public class MainScreen : MonoBehaviour
@@ -12,17 +14,18 @@ public class MainScreen : MonoBehaviour
     [SerializeField] private Menu _menu;
     [SerializeField] private StatisticsScreen _statisticsScreen;
     [SerializeField] private SimpleScrollSnap _simpleScrollSnap;
+    [SerializeField] private Settings _settings;
 
     private ScreenVisabilityHandler _screenVisabilityHandler;
-    
+
     public event Action StatisticsClicked;
-    public event Action SettingsClicked;
 
     private void Awake()
     {
+        Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
         _screenVisabilityHandler = GetComponent<ScreenVisabilityHandler>();
     }
-    
+
     private void Start()
     {
         StartScrolling();
@@ -33,7 +36,9 @@ public class MainScreen : MonoBehaviour
     {
         _menu.SettingsClicked += OnSettingsClicked;
         _menu.StatisticsClicked += OnStatisticsClicked;
+        _menu.SettingsClicked += OnSettingsClicked;
         _statisticsScreen.HomeClicked += EnableScreen;
+        _settings.HomeClicked += EnableScreen;
     }
 
     private void OnDisable()
@@ -41,7 +46,24 @@ public class MainScreen : MonoBehaviour
         StopScrolling();
         _menu.SettingsClicked -= OnSettingsClicked;
         _menu.StatisticsClicked -= OnStatisticsClicked;
+        _menu.SettingsClicked -= OnSettingsClicked;
         _statisticsScreen.HomeClicked -= EnableScreen;
+        _settings.HomeClicked -= EnableScreen;
+    }
+
+    public void OpenSpaceJump()
+    {
+        SceneManager.LoadScene("SpaceJumpScene");
+    }
+
+    public void OpenSpaceMission()
+    {
+        SceneManager.LoadScene("SpaceMission");
+    }
+
+    public void OpenBombEscape()
+    {
+        SceneManager.LoadScene("BombEscape");
     }
 
     public void EnableScreen()
@@ -64,10 +86,10 @@ public class MainScreen : MonoBehaviour
     {
         CancelInvoke(nameof(ChangeGame));
     }
-    
+
     private void OnSettingsClicked()
     {
-        SettingsClicked?.Invoke();
+        _settings.ShowSettings();
         DisableScreen();
     }
 
