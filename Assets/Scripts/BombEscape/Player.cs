@@ -48,12 +48,10 @@ namespace BombEscape
                             if (obj is Bomb)
                             {
                                 BombCatched?.Invoke(obj);
-                                Debug.Log("bomb");
                             }
                             else if (obj is Crystal)
                             {
                                 CrystalCatched?.Invoke(obj);
-                                Debug.Log("crystal");
                             }
                         }
                     }
